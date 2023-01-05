@@ -24,12 +24,12 @@ func Init(db *gorm.DB, conf config.Conf, router *gin.Engine) *gin.Engine {
 	deviceViewV1 := deviceviewV1.View(db)
 
 	// Routing Website Service
-	product := router.Group("/device", basic.Auth(conf))
+	product := router.Group("/", basic.Auth(conf))
 	product.GET("/", deviceViewV1.Index)
 
 	//Routing API Service
 	api := router.Group("/api/v1")
-	api.GET("/device", deviceHandlerV1.ListProduct)
+	api.GET("/device", deviceHandlerV1.ListDevice)
 
 	router = ParseTmpl(router)
 	return router

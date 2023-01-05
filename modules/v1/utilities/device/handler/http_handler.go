@@ -29,7 +29,7 @@ func Handler(db *gorm.DB) *deviceHandler {
 	return Handler
 }
 
-func (h *deviceHandler) ListProduct(c *gin.Context) {
+func (h *deviceHandler) ListDevice(c *gin.Context) {
 	listProduct, err := h.productService.ListDevice()
 
 	if err != nil {
