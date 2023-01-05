@@ -30,6 +30,7 @@ func Init(db *gorm.DB, conf config.Conf, router *gin.Engine) *gin.Engine {
 	//Routing API Service
 	api := router.Group("/api/v1")
 	api.GET("/device", deviceHandlerV1.ListDevice)
+	api.GET("/antares-latest-data", deviceHandlerV1.ReceivedDataAntares)
 
 	router = ParseTmpl(router)
 	return router

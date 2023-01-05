@@ -1,14 +1,15 @@
 package models
 
-// type Product struct {
-// 	Id     int
-// 	Name   string
-// 	Amount int
-// 	Price  int
-// }
-
 type Device struct {
-	Device_id    int
+	Device_id    string
 	Device_name  string
 	Date_created string
+}
+
+type CapacityHistory struct {
+	Capacity_history_id int
+	Device_id           string
+	Capacity            int
+	Device_name         string
+	Date_updated        string
 }

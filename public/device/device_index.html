@@ -1,25 +1,27 @@
 {{ define "content" }}
-<h1>List Device</h1>
-<div>
-    <div>
-        <table>
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th width="100px">Name</th>
-                    <th>Date Created</th>
-                </tr>
-            </thead>
-            <tbody>
-                {{ range .list }}
-                <tr>
-                    <td>{{ .Device_id }}</td>
-                    <td>{{ .Device_name }}</td>
-                    <td>{{ .Date_created }}</td>
-                </tr>
-                {{ end }}
-            </tbody>
-        </table>
-    </div>
+<div class="container">
+    <h1 class="mt-4">History Kapasitas Tempat Sampah</h1>
+    <table class="table mt-4">
+        <thead>
+            <tr width="200px">
+                <th scope="col">No</th>
+                <th scope="col">Kode Device</th>
+                <th scope="col">Nama Device</th>
+                <th scope="col">Tanggal Update</th>
+                <th scope="col">Kapasitas Terakhir</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{ range .history }}
+            <tr>
+                <td>{{ .Capacity_history_id }}</td>
+                <td>{{ .Device_id }}</td>
+                <td>{{ .Device_name }}</td>
+                <td>{{ .Date_updated }}</td>
+                <td>{{ .Capacity }}</td>
+            </tr>
+            {{ end }}
+        </tbody>
+    </table>
 </div>
 {{ end }}
