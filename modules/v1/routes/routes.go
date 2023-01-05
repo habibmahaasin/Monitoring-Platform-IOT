@@ -29,7 +29,7 @@ func Init(db *gorm.DB, conf config.Conf, router *gin.Engine) *gin.Engine {
 
 	//Routing API Service
 	api := router.Group("/api/v1")
-	api.GET("/product", deviceHandlerV1.ListProduct)
+	api.GET("/device", deviceHandlerV1.ListProduct)
 
 	router = ParseTmpl(router)
 	return router

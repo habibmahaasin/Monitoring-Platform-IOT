@@ -35,5 +35,7 @@ func (h *deviceView) Index(c *gin.Context) {
 		return
 	}
 
-	c.HTML(http.StatusOK, "product_index.html", gin.H{"list": listDevice})
+	c.HTML(http.StatusOK, "device_index.html", gin.H{
+		"list": listDevice,
+	})
 }
