@@ -25,7 +25,8 @@ type AntaresDetail struct {
 }
 
 type SensorData struct {
-	Kapasitas int `json:"kapasitas"`
+	Kapasitas     int    `json:"kapasitas"`
+	Status_device string `json:"status"`
 }
 
 type ObjectAntares5 struct {

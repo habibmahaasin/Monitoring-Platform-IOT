@@ -9,6 +9,7 @@
                 <th scope="col">Nama Device</th>
                 <th scope="col">Tanggal Update</th>
                 <th scope="col">Kapasitas Terakhir</th>
+                <th scope="col">Status</th>
             </tr>
         </thead>
         <tbody>
@@ -19,6 +20,7 @@
                 <td>{{ .Device_name }}</td>
                 <td>{{ .Date_updated }}</td>
                 <td>{{ .Capacity }}%</td>
+                <td>{{ .Status_device }}</td>
             </tr>
             {{ end }}
         </tbody>

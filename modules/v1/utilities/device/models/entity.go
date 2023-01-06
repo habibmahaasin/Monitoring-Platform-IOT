@@ -11,5 +11,6 @@ type CapacityHistory struct {
 	Device_id           string
 	Capacity            int
 	Device_name         string
+	Status_device       string
 	Date_updated        string
 }

@@ -59,13 +59,13 @@ func (n *repository) GetLatestContent(access_key string) (models.ReceivedData, e
 }
 
 func (n *repository) ExportSensorData(DeviceId string, input models.SensorData) error {
-	err := n.db.Exec("INSERT INTO capacity_history (device_id, capacity, date_updated) VALUES (?,?,?)", DeviceId, input.Kapasitas, time.Now()).Error
+	err := n.db.Exec("INSERT INTO capacity_history (device_id, capacity, status_device, date_updated) VALUES (?,?,?,?)", DeviceId, input.Kapasitas, input.Status_device, time.Now()).Error
 	return err
 }
 
 func (r *repository) GetDeviceHistory() ([]models.CapacityHistory, error) {
 	var capacityHistory []models.CapacityHistory
-	err := r.db.Raw("SELECT capacity_history.capacity_history_id,  device.device_id, device.device_name, capacity_history.capacity, capacity_history.date_updated FROM capacity_history INNER JOIN device ON device.device_id = capacity_history.device_id ORDER BY capacity_history.date_updated DESC").Scan(&capacityHistory).Error
+	err := r.db.Raw("SELECT capacity_history.capacity_history_id, device.device_id, device.device_name,  capacity_history.status_device, capacity_history.capacity, capacity_history.date_updated FROM capacity_history INNER JOIN device ON device.device_id = capacity_history.device_id ORDER BY capacity_history.date_updated DESC").Scan(&capacityHistory).Error
 	if err != nil {
 		return nil, err
 	}
