@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Waktu pembuatan: 05 Jan 2023 pada 18.53
+-- Waktu pembuatan: 06 Jan 2023 pada 15.43
 -- Versi server: 10.4.21-MariaDB
 -- Versi PHP: 8.1.6
 
@@ -31,6 +31,7 @@ CREATE TABLE `capacity_history` (
   `capacity_history_id` int(11) NOT NULL,
   `device_id` varchar(150) NOT NULL,
   `capacity` int(11) NOT NULL,
+  `status_device` varchar(255) NOT NULL,
   `date_updated` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -38,10 +39,9 @@ CREATE TABLE `capacity_history` (
 -- Dumping data untuk tabel `capacity_history`
 --
 
-INSERT INTO `capacity_history` (`capacity_history_id`, `device_id`, `capacity`, `date_updated`) VALUES
-(6, 'n5EpridtQcOhhE5i', 75, '2023-01-06 00:49:20'),
-(7, 'n5EpridtQcOhhE5i', 72, '2023-01-06 00:51:56'),
-(8, 'n5EpridtQcOhhE5i', 60, '2023-01-06 00:52:04');
+INSERT INTO `capacity_history` (`capacity_history_id`, `device_id`, `capacity`, `status_device`, `date_updated`) VALUES
+(14, 'n5EpridtQcOhhE5i', 11, 'Penuh', '2023-01-06 19:23:46'),
+(15, 'n5EpridtQcOhhE5i', 5, 'Penuh', '2023-01-06 19:24:37');
 
 -- --------------------------------------------------------
 
@@ -87,7 +87,7 @@ ALTER TABLE `device`
 -- AUTO_INCREMENT untuk tabel `capacity_history`
 --
 ALTER TABLE `capacity_history`
-  MODIFY `capacity_history_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `capacity_history_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
