@@ -12,6 +12,7 @@ type Service interface {
 	GetLatestContent(access_key string) (models.ReceivedData, error)
 	GetDatafromContent(input string, DeviceId string) (models.SensorData, error)
 	GetDeviceHistory() ([]models.CapacityHistory, error)
+	GetDatafromWebhook(sensorData string, antaresDeviceID string) (models.SensorData, error)
 }
 
 type service struct {
@@ -53,4 +54,16 @@ func (s *service) GetDeviceHistory() ([]models.CapacityHistory, error) {
 		return nil, err
 	}
 	return capacityHistory, nil
+}
+
+func (n *service) GetDatafromWebhook(sensorData string, antaresDeviceID string) (models.SensorData, error) {
+	var data models.SensorData
+	err := json.Unmarshal([]byte(sensorData), &data)
+	if err != nil {
+		fmt.Println(err)
+		return data, err
+	}
+	fmt.Println("Data sensor terbaru :", data)
+	err = n.repository.ExportSensorData(antaresDeviceID, data)
+	return data, err
 }

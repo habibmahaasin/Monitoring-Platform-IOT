@@ -28,6 +28,7 @@ func (h *deviceView) Index(c *gin.Context) {
 	listDevice, err := h.productService.ListDevice()
 	history, err := h.productService.GetDeviceHistory()
 
+	// println(latest)
 	if err != nil {
 		c.HTML(http.StatusInternalServerError, "error.html", nil)
 		return

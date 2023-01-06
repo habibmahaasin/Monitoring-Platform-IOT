@@ -1,9 +1,11 @@
 package product
 
 import (
+	"ClearningPatternGO/modules/v1/utilities/device/models"
 	"ClearningPatternGO/modules/v1/utilities/device/repository"
 	"ClearningPatternGO/modules/v1/utilities/device/service"
 	api "ClearningPatternGO/pkg/api_response"
+	"ClearningPatternGO/pkg/helpers"
 	"fmt"
 	"net/http"
 	"strings"
@@ -60,4 +62,20 @@ func (n *deviceHandler) ReceivedDataAntares(c *gin.Context) {
 	}
 	fmt.Println("Sukses masuk data ke db")
 	c.JSON(http.StatusOK, getLatestContent.First.Con)
+}
+
+func (n *deviceHandler) SubscribeWebhook(c *gin.Context) {
+	var webhookData models.ObjectAntares1
+	if err := c.ShouldBindJSON(&webhookData); err != nil {
+		response := helpers.APIRespon("Error, inputan tidak sesuai", 220, "error", nil)
+		c.JSON(220, response)
+		return
+	}
+	Antares_Device_Id := strings.Replace(webhookData.First.M2m_nev.M2m_rep.M2m_cin.Pi, "/antares-cse/cnt-", "", -1)
+	_, err := n.productService.GetDatafromWebhook(webhookData.First.M2m_nev.M2m_rep.M2m_cin.Con, Antares_Device_Id)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	// fmt.Println(Antares_Device_Id)
 }

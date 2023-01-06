@@ -31,7 +31,7 @@ func Init(db *gorm.DB, conf config.Conf, router *gin.Engine) *gin.Engine {
 	api := router.Group("/api/v1")
 	api.GET("/device", deviceHandlerV1.ListDevice)
 	api.GET("/antares-latest-data", deviceHandlerV1.ReceivedDataAntares)
-
+	api.POST("/webhook", deviceHandlerV1.SubscribeWebhook)
 	router = ParseTmpl(router)
 	return router
 }
