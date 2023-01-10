@@ -24,8 +24,8 @@ func Init(db *gorm.DB, conf config.Conf, router *gin.Engine) *gin.Engine {
 	deviceViewV1 := deviceviewV1.View(db)
 
 	// Routing Website Service
-	product := router.Group("/", basic.Auth(conf))
-	product.GET("/", deviceViewV1.Index)
+	device := router.Group("/", basic.Auth(conf))
+	device.GET("/", deviceViewV1.Index)
 
 	//Routing API Service
 	api := router.Group("/api/v1")
