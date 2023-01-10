@@ -41,11 +41,10 @@
       <div class="col-12 col-md-12">
         <div class="card mb-3" style="max-width: 100%;">
           <div class="card-body">
-            <h5 class="card-title text-secondary">Log Capacity</h5>
-            <table class="table table-striped mt-4 table-responsive">
+            <h5 class="card-title text-secondary mb-4">Log Capacity</h5>
+            <table id="logHistory" class="table table-striped" style="width:100%">
               <thead>
                 <tr width="200px" >
-                  <th scope="col">No</th>
                   <th scope="col">Kode Device</th>
                   <th scope="col">Nama Device</th>
                   <th scope="col">Tanggal Update</th>
@@ -56,12 +55,15 @@
               <tbody>
                 {{ range .history }}
                   <tr>
-                      <td>{{ .Capacity_history_id }}</td>
                       <td>{{ .Device_id }}</td>
                       <td>{{ .Device_name }}</td>
                       <td>{{ .Date_updated }}</td>
                       <td>{{ .Capacity }}%</td>
-                      <td>{{ .Status_device }}</td>
+                      {{ if eq .Status_device "Penuh" }}
+                        <td><span class="status-capacity full">{{ .Status_device }}</span></td>
+                      {{ else }}
+                        <td><span class="status-capacity available">{{ .Status_device }}</span></td>
+                      {{ end }}
                   </tr>
                 {{ end }}
               </tbody>
