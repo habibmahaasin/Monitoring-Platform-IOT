@@ -18,8 +18,8 @@ const cty = document.getElementById('Line');
 var dataReverse = data.reverse()
 var timeReverse = time.reverse()
 
-var dataSlice = dataReverse.slice(-10)
-var timeSlice = timeReverse.slice(-10)
+var dataSlice = dataReverse.slice(-8)
+var timeSlice = timeReverse.slice(-8)
 
 // Line
 new Chart(cty, {
