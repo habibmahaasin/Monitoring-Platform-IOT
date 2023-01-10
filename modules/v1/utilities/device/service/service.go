@@ -50,6 +50,9 @@ func (n *service) GetDatafromContent(input string, DeviceId string) (models.Sens
 
 func (s *service) GetDeviceHistory() ([]models.CapacityHistory, error) {
 	capacityHistory, err := s.repository.GetDeviceHistory()
+	for i, v := range capacityHistory {
+		capacityHistory[i].Date_formatter = v.Date_updated.Format("15:04:05")
+	}
 	if err != nil {
 		return nil, err
 	}

@@ -1,155 +1,75 @@
 {{ define "content" }}
-<style>
-    body::-webkit-scrollbar{
-        display: none;
-    }
-</style>
-<div style="background-color: #029cde; margin: 0; padding: 0;">
-    <div class="container">
-            <h1 class="py-4" style="color: #fff;">TEMPAT SAMPAH PINTAR</h1>
-        <div style="display: flex;">
-            <!-- Grafik -->
-            <div class="card m-1" style="width:80%; display: flex; flex-direction:row; align-items: center;">
-                <div style="width: 50%;">  
-                    <canvas id="Line"></canvas>
-                </div>
-                <div style="width: 50%; height: 100%;">  
-                    <canvas id="Donat"></canvas>
-                </div>
-                
+<div class="mt-4">
+  <div class="container">
+    <h3 class="text-secondary mb-4">Smart Trash Can Website</h3>
+    <div class="row">
+      <div class="col-12 col-md-3">
+        <div class="card mb-3" style="max-width: 100%; height: 23rem;">
+          <div class="card-body">
+            <h5 class="card-title text-secondary">Recent Capacity</h5>
+            <div class="d-flex justify-content-center align-content-center" style="margin-top: 4.5rem;">
+              <span style="font-size: 80px; font-weight: bold;" id="sisa">%</span>
             </div>
-            <!-- kapasitas terakhir -->
-            <div class="card m-1"  style="width: 30%;">
-    
-                <div class="card-body">
-                    <h3>Kapasitas Terakhir</h3>
-                    <span style="font-size: 90px; font-weight: bold;" id="sisa">%</span>
-                </div>
-    
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-5">
+        <div class="card mb-3" style="max-width: 100%; height: 23rem;">
+          <div class="card-body">
+            <h5 class="card-title text-secondary mb-4">Capacity History</h5>
+            <div style="width: 100%;">  
+              <canvas id="Line"></canvas>
             </div>
+          </div>
         </div>
-        
-        <!-- Tabel -->
-        <div class="card p-4 mt-1">
-            <h3>History</h3>
-            <hr/>
-            <table class="table mt-4">
-                <thead>
-                    <tr width="200px" >
-                        <th scope="col">No</th>
-                        <th scope="col">Kode Device</th>
-                        <th scope="col">Nama Device</th>
-                        <th scope="col">Tanggal Update</th>
-                        <th scope="col">Kapasitas</th>
-                        <th scope="col">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {{ range .history }}
-                    <tr>
-                        <td>{{ .Capacity_history_id }}</td>
-                        <td>{{ .Device_id }}</td>
-                        <td>{{ .Device_name }}</td>
-                        <td>{{ .Date_updated }}</td>
-                        <td>{{ .Capacity }}%</td>
-                        <td>{{ .Status_device }}</td>
-                    </tr>
-                    {{ end }}
-                </tbody>
-            </table>
+      </div>
+      <div class="col-12 col-md-4">
+        <div class="card mb-3" style="max-width: 100%; height: 23rem;">
+          <div class="card-body">
+            <h5 class="card-title text-secondary mb-3">Recent Capacity Chart</h5>
+            <center>
+              <div style="width: 75%;">  
+                <canvas id="Donat"></canvas>
+              </div>
+            </center>
+          </div>
         </div>
-        
+      </div>
     </div>
-    <br/>
+
+    <div class="row mt-1">
+      <div class="col-12 col-md-12">
+        <div class="card mb-3" style="max-width: 100%;">
+          <div class="card-body">
+            <h5 class="card-title text-secondary">Log Capacity</h5>
+            <table class="table table-striped mt-4 table-responsive">
+              <thead>
+                <tr width="200px" >
+                  <th scope="col">No</th>
+                  <th scope="col">Kode Device</th>
+                  <th scope="col">Nama Device</th>
+                  <th scope="col">Tanggal Update</th>
+                  <th scope="col">Kapasitas</th>
+                  <th scope="col">Status</th>
+              </tr>
+              </thead>
+              <tbody>
+                {{ range .history }}
+                  <tr>
+                      <td>{{ .Capacity_history_id }}</td>
+                      <td>{{ .Device_id }}</td>
+                      <td>{{ .Device_name }}</td>
+                      <td>{{ .Date_updated }}</td>
+                      <td>{{ .Capacity }}%</td>
+                      <td>{{ .Status_device }}</td>
+                  </tr>
+                {{ end }}
+              </tbody>
+            </table>
+           </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script>
-    var data = [];
-    var device = [];
-    var time = []
-    var grafik_data = JSON.parse(`{{ .history }}`);
-
-    for (let index = 0; index < grafik_data.length; index++) {
-        const element = grafik_data[index];
-        data.push(element.Capacity)
-        time.push(element.Date_updated)
-        device.push(element.Device_name)
-    }
-
-    var sisa = 100 - data[0];
-    var pakai = data[0];
-    
-    document.getElementById("sisa").innerHTML = pakai+"%";
-
-    const ctx = document.getElementById('Donat');
-    const cty = document.getElementById('Line');
-
-    // Line
-    new Chart(cty, {
-        type: 'line',
-        data: {
-            labels: time,
-            datasets: [{
-            label: 'Dalam Persen',
-            data: data,
-            borderWidth: 1
-            }]
-         },
-        options: {
-          plugins:{
-            title: {
-            display: true,
-            text: 'History'
-            }
-          },
-          responsive: true,
-          scales: {
-            x: {
-              title: {
-                display: true,
-                text: 'Time'
-              }
-            },
-            y: {
-              title: {
-                display: true,
-                text: 'Kapasitas'
-              },
-              min: 0,
-              max: 100,
-            }
-          }
-        },
-    });
-
-
-    // Donat
-    new Chart(ctx, {
-      type: 'doughnut',
-      data: {
-        labels: ['Sisa', 'Terpakai',],
-        datasets: [{
-          label: 'Dalam Persen',
-          data: [pakai, sisa],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        plugins:{
-            title: {
-            display: true,
-            text: 'Terpakai'
-            }
-          },
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
-    });
-  </script>
-
 {{ end }}

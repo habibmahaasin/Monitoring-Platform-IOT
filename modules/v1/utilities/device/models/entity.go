@@ -1,5 +1,7 @@
 package models
 
+import "time"
+
 type Device struct {
 	Device_id    string
 	Device_name  string
@@ -12,5 +14,6 @@ type CapacityHistory struct {
 	Capacity            int
 	Device_name         string
 	Status_device       string
-	Date_updated        string
+	Date_updated        time.Time
+	Date_formatter      string
 }

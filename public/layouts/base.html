@@ -3,13 +3,106 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>Monitoring Smart Trash Can</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <style>
+      body::-webkit-scrollbar{
+          display: none;
+      }
+      .card{
+        box-shadow: rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
+        border: none;
+        border-radius: 15px;
+        padding: 10px;
+      }
+    </style>
 </head>
-<body>
+<body style="background: #F5F5F9;">
     {{ template "content" .}}
 </body>
   <footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var data = [];
+        var time = []
+        var grafik_data = JSON.parse(`{{ .history }}`);
+
+        for (let index = 0; index < grafik_data.length; index++) {
+            const element = grafik_data[index];
+            data.push(element.Capacity)
+            time.push(element.Date_formatter)
+        }
+  
+        var sisa = 100 - data[0];
+        var pakai = data[0];
+        
+        document.getElementById("sisa").innerHTML = pakai+"%";
+
+        const ctx = document.getElementById('Donat');
+        const cty = document.getElementById('Line');
+
+        data.reverse()
+        time.reverse()
+
+        // Line
+        new Chart(cty, {
+            type: 'line',
+            data: {
+                labels: time,
+                datasets: [{
+                  label: 'Kapasitas Dalam Persen',
+                  data: data,
+                  borderWidth: 1,
+                }]
+            },
+            options: {
+              plugins: {
+                  legend: {
+                    position: 'bottom',
+                      display: true,
+                  }
+              },
+              responsive: true,
+              scales: {
+                x: {
+                  title: {
+                    display: true,
+                    text: 'Time'
+                  }
+                },
+                y: {
+                  title: {
+                    display: true,
+                    text: 'Capacity'
+                  },
+                  min: 0,
+                  max: 100,
+                }
+              }
+            },
+        });
+
+        // Donat
+        new Chart(ctx, {
+          type: 'pie',
+          data: {
+            labels: ['Sisa', 'Terpakai',],
+            datasets: [{
+              label: 'Dalam Persen',
+              data: [pakai, sisa],
+              borderWidth: 1
+            }]
+          },
+          options : {
+            plugins: {
+                  legend: {
+                    position: 'bottom',
+                      display: true,
+                  }
+              },
+          }
+        });
+      </script>
   </footer>
 </html>
