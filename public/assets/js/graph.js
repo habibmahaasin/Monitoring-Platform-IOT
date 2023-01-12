@@ -3,12 +3,19 @@ var time = [];
 
 for (let index = 0; index < grafik_data.length; index++) {
     const element = grafik_data[index];
+    if (element.Capacity > 100){
+        element.Capacity = 100
+    }
     data.push(element.Capacity)
     time.push(element.Date_formatter)
 }
 
 var sisa = 100 - data[0];
 var pakai = data[0];
+
+if (pakai > 100) {
+    pakai = 100
+}
 
 document.getElementById("sisa").innerHTML = pakai+"%";
 

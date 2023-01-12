@@ -77,5 +77,4 @@ func (n *deviceHandler) SubscribeWebhook(c *gin.Context) {
 		fmt.Println(err)
 		return
 	}
-	// fmt.Println(Antares_Device_Id)
 }
